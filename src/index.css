@@ -1,0 +1,46 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+ 
+  @theme {
+    --color-card: hsl(var(--card));
+    --color-btn: hsl(var(--btn));
+    --color-primary: hsl(var(--primary));
+    --color-bg: hsl(var(--bg));
+    --color-title: hsl(var(--title));
+    --color-text: hsl(var(--text));
+  }
+
+@layer base{
+    :root{
+      --card: 200 60% 99%;
+      --btn: 0 0% 78%;
+      --primary: 3 77% 44%;
+      --bg: 217 61% 90%;
+      --title: 226 25% 17%;
+      --text: 226 11% 37%;
+    }
+
+    .dark{
+      --card: 226 25% 17%;
+      --btn:  225 23% 24%;
+      --primary: 3 86% 64%;
+      --bg: 227 75% 14%;
+      --title: 200 60% 99%;
+      --text: 0 0% 78%;
+    }
+}
+
+
+@layer components{
+    .btn{
+      @apply bg-card border border-gray-600 cursor-pointer rounded-full py-2 px-5 
+            text-title font-semibold hover:bg-primary hover:text-card hover:border-transparent 
+            transition duration-300
+    }
+}
+
+
+
+
+
