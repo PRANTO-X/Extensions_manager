@@ -9,6 +9,8 @@ const ExtensionsContainer = () => {
     return saved ? JSON.parse(saved) : initialExtensions
   })
 
+    const [removedIndices, setRemovedIndices] = useState([]);
+
   const [filter, setFilter] = useState('All')
 
     
@@ -24,14 +26,18 @@ const ExtensionsContainer = () => {
                 i === index ? {...e,active: !e.active} : e
             ))
         ))
+    };
+
+  const removeExtension = (indexToRemove) => {
+    setRemovedIndices((prev) => [...prev, indexToRemove]);
   };
 
-  
-
-    const filteredExtensions = extensions.filter(e =>
+      const filteredExtensions = extensions
+        .map((e, i) => ({ ...e, originalIndex: i }))
+        .filter((e) => !removedIndices.includes(e.originalIndex))
+        .filter((e) =>
         filter === 'All' ? true :
-        filter === 'Active' ? e.active :
-        !e.active
+        filter === 'Active' ? e.active : !e.active
     );
 
    
@@ -63,11 +69,11 @@ const ExtensionsContainer = () => {
                     </div>
 
                     <div className="flex justify-between items-center">
-                        <button className='btn'>                                  
+                        <button className='btn'  onClick={() => removeExtension(e.originalIndex)}>                                  
                             Remove
                         </button>
 
-                    <ToggleBtn isOn={e.active} onToggle = {()=>updateExtensions(index)}/>
+                    <ToggleBtn isOn={e.active} onToggle = {()=>updateExtensions(e.originalIndex)}/>
                     </div>
                 </div>
             ))}
